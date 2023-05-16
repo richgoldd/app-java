@@ -59,8 +59,7 @@ pipeline {
                     sh 'docker push 634639955940.dkr.ecr.us-west-1.amazonaws.com/product_service:${env.BUILD_NUMBER}'
                  }
               }
-           }       
-        }
+           }      
 
     post {
       failure {
