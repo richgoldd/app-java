@@ -1,6 +1,10 @@
 pipeline {
 
     agent any
+    environment {
+        AWS_ACCESS_KEY_ID     = credentials('aws_access_key_id')
+        AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')
+        AWS_DEFAULT_REGION = 'us-west-1'
    
     stages {      
         stage('Git Checkout') {
@@ -44,9 +48,11 @@ pipeline {
         }        
 
         stage('Push Docker Image to ECR') {
-            agent { docker 'ventx/helm-awscli-kubectl-terraform:tf-v0.12.24' }
-            steps {
-                withAWS(credentials: 'AWS_CREDENTIALS_ID', region: 'us-west-1') {
+                 agent { docker 'ventx/helm-awscli-kubectl-terraform:tf-v0.12.24' }
+                 steps {
+                    sh 'export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID'
+                    sh 'export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY'
+                    sh 'export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION'
                     sh 'aws ecr get-login-password --region us-west-1 | docker login --username AWS --password-stdin 634639955940.dkr.ecr.us-west-1.amazonaws.com'
                     sh 'docker tag product_service:${env.BUILD_NUMBER} 634639955940.dkr.ecr.us-west-1.amazonaws.com/product_service:${env.BUILD_NUMBER}'
                     sh 'docker push 634639955940.dkr.ecr.us-west-1.amazonaws.com/product_service:${env.BUILD_NUMBER}'
