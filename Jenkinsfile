@@ -31,7 +31,7 @@ pipeline {
         stage('Packaging Stage') {
   //         agent { docker 'maven:3.5-alpine' }
            steps {
-                   echo 'Packaging stage for the app...'
+                   echo 'Packaging stage for the app..'
                    sh 'mvn package'
            }
         }
