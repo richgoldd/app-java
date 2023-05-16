@@ -44,7 +44,6 @@ pipeline {
         }        
 
         stage('Push Docker Image to ECR') {
-            agent { docker 'ventx/helm-awscli-kubectl-terraform:tf-v0.12.24' }
             steps {
                 withAWS(credentials: 'AWS_CREDENTIALS_ID', region: 'us-west-1') {
                     sh 'aws ecr get-login-password --region us-west-1 | docker login --username AWS --password-stdin 634639955940.dkr.ecr.us-west-1.amazonaws.com'
