@@ -50,12 +50,15 @@ pipeline {
 
         stage('Push Docker Image to ECR') {
                  steps {
-                    sh 'export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID'
-                    sh 'export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY'
-                    sh 'export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION'
-                    sh 'aws ecr get-login-password --region us-west-1 | docker login --username AWS --password-stdin 634639955940.dkr.ecr.us-west-1.amazonaws.com'
-                    sh 'docker tag product_service:${env.BUILD_NUMBER} 634639955940.dkr.ecr.us-west-1.amazonaws.com/product_service:${env.BUILD_NUMBER}'
-                    sh 'docker push 634639955940.dkr.ecr.us-west-1.amazonaws.com/product_service:${env.BUILD_NUMBER}'
+                    sh """
+                         export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+                         export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+                         export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
+                         aws ec2 describe-regions 
+                         aws ecr get-login-password --region us-west-1 | docker login --username AWS --password-stdin 634639955940.dkr.ecr.us-west-1.amazonaws.com
+                         docker tag product_service:${env.BUILD_NUMBER} 634639955940.dkr.ecr.us-west-1.amazonaws.com/product_service:${env.BUILD_NUMBER}
+                         docker push 634639955940.dkr.ecr.us-west-1.amazonaws.com/product_service:${env.BUILD_NUMBER}
+                      """
                  }
               }
            }      
