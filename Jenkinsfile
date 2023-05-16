@@ -51,6 +51,7 @@ pipeline {
         stage('Push Docker Image to ECR') {
                  agent { docker 'ventx/helm-awscli-kubectl-terraform:tf-v0.12.24' }
                  steps {
+                    sh 'yum install -y docker'
                     sh 'export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID'
                     sh 'export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY'
                     sh 'export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION'
@@ -59,7 +60,7 @@ pipeline {
                     sh 'docker push 634639955940.dkr.ecr.us-west-1.amazonaws.com/product_service:${env.BUILD_NUMBER}'
                  }
               }
-           }      
+           }      AWS_DEFAULT_REGION
 
     post {
       failure {
