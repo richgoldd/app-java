@@ -69,6 +69,7 @@ pipeline {
                  export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
                  export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
                  export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
+                 rm -rf .kube
                  mkdir .kube
                  touch .kube/config
                  chmod 775 .kube/config
