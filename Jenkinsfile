@@ -63,6 +63,7 @@ pipeline {
               }
      
          stage('Deploy application to K8s') {
+            agent { docker 'ventx/helm-awscli-kubectl-terraform:tf-v0.12.24' }
             steps {
               sh """
                  export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
