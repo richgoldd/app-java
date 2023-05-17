@@ -65,7 +65,7 @@ pipeline {
 
         stage('Deploy app to EKS') {
                  steps {
-                   withAWS(credentials: 'AWS_CREDENTIALS_ID', region: "${AWS_DEFAULT_REGION") {
+                   withAWS(credentials: 'AWS_CREDENTIALS_ID', region: "${AWS_DEFAULT_REGION}") {
                      sh """
                          aws ec2 describe-regions 
                          aws ecr get-login-password --region us-west-1 | docker login --username AWS --password-stdin ${ECR_REGISTRY_ID}
