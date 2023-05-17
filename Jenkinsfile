@@ -21,7 +21,7 @@ pipeline {
            agent { docker 'maven:3.5-alpine' }
            steps { 
                    echo 'Building stage for the app...'
-                   sh 'mvn compile'
+                   sh 'mvn clean compile'
            }
         }
 
@@ -39,7 +39,7 @@ pipeline {
            agent { docker 'maven:3.5-alpine' }
            steps {
                    echo 'Packaging stage for the app..'
-                   sh 'mvn package'
+                   sh 'mvn clean package'
            }
         }
 
@@ -47,6 +47,9 @@ pipeline {
             steps {
                 echo 'Bulding docker image...'
                 sh "docker build -t product_service:${env.BUILD_NUMBER} ."
+                echo "Testing docker app..."
+                sh "docker ps"
+                sh "docker run -d  -p 80:8080 --name java-app product_service:${env.BUILD_NUMBER}"
             }
         }        
         
@@ -86,8 +89,7 @@ pipeline {
 	                 helm upgrade --install java-app ./java-app  --set app.image="${ECR_REGISTRY_ID}/${IMAGE_NAME}:${env.BUILD_NUMBER}"
  			 sleep 6s
                          helm ls
-                         
-		
+
                       """
                  }
               }
