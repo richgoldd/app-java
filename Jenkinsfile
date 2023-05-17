@@ -68,14 +68,14 @@ pipeline {
                  export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
                  export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
                  export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
-                 mkdir -p /oot/.kube
+                 mkdir -p /root/.kube
                  touch /root/.kube/config
                  ls -la /root/.kube
                  aws --version
                  helm version
                  aws eks update-kubeconfig --name devopsthehardway-cluster --region us-west-1 
                  echo "Deploying application..."
-                 helm upgrade --install java-app ./java-app --values values_dev.yaml --set app.image="634639955940.dkr.ecr.us-west-1.amazonaws.com/product_service:${env.BUILD_NUMBER}
+                 helm upgrade --install java-app ./java-app --values values_dev.yaml --set app.image="634639955940.dkr.ecr.us-west-1.amazonaws.com/product_service:${env.BUILD_NUMBER}"
                  sleep 6s
                  kubectl get deployments
                  kubectl get pods 
