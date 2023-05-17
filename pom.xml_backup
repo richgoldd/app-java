@@ -30,13 +30,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-		<dependency> 	
-			<groupId>org.apache.axis</groupId> 	
-			<artifactId>axis</artifactId> 	
-			<version>1.4</version> 
-		</dependency>
-
 	</dependencies>
 
 	<build>
