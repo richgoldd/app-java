@@ -71,6 +71,7 @@ pipeline {
                  export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
                  mkdir .kube
                  touch .kube/config
+                 chmod 775 .kube/config
                  ls -la .kube
                  aws --version
                  helm version
