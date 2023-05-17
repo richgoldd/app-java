@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: myapp
-        image: "{{ .Values.nginx }}"
+        image: "{{ .Values.app.image }}"
         ports:
         - containerPort: 8080
 
