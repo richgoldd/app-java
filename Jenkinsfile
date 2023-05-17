@@ -68,6 +68,9 @@ pipeline {
                 	 aws eks update-kubeconfig --name devopsthehardway-cluster --region us-west-1
                 	 echo "Deploying application..."
 	                 helm upgrade --install java-app ./java-app  --set app.image="634639955940.dkr.ecr.us-west-1.amazonaws.com/product_service:${env.BUILD_NUMBER}"
+ 			 sleep 6s
+                         helm ls
+                         
 		
                       """
                  }
