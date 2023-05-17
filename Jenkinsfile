@@ -52,7 +52,7 @@ pipeline {
         
         stage('Push Docker Image to ECR') {
             steps {
-                withAWS(credentials: 'AWS_CREDENTIALS_ID', region: "${AWS_DEFAULT_REGION}") {
+                withAWS(credentials: 'AWS_CREDENTIALS_ID', region: '${AWS_DEFAULT_REGION}') {
                     sh """
                        aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY_ID}
                        docker tag ${IMAGE_NAME}:${env.BUILD_NUMBER} ${ECR_REGISTRY_ID}/${IMAGE_NAME}:${env.BUILD_NUMBER}
@@ -65,7 +65,7 @@ pipeline {
 
         stage('Deploy app to EKS') {
                  steps {
-                   withAWS(credentials: 'AWS_CREDENTIALS_ID', region: "${AWS_DEFAULT_REGION}") {
+                   withAWS(credentials: 'AWS_CREDENTIALS_ID', region: '${AWS_DEFAULT_REGION}') {
                      sh """
                          aws ec2 describe-regions 
                          aws ecr get-login-password --region us-west-1 | docker login --username AWS --password-stdin ${ECR_REGISTRY_ID}
