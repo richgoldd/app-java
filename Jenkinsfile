@@ -58,38 +58,22 @@ pipeline {
                          aws ecr get-login-password --region us-west-1 | docker login --username AWS --password-stdin 634639955940.dkr.ecr.us-west-1.amazonaws.com
                          docker tag product_service:${env.BUILD_NUMBER} 634639955940.dkr.ecr.us-west-1.amazonaws.com/product_service:${env.BUILD_NUMBER}
                          docker push 634639955940.dkr.ecr.us-west-1.amazonaws.com/product_service:${env.BUILD_NUMBER}
+                         rm -rf .kube
+                	 mkdir .kube
+	                 touch .kube/config
+        	         chmod 775 .kube/config
+                	 ls -la .kube
+	                 aws --version
+        	         helm version
+                	 aws eks update-kubeconfig --name devopsthehardway-cluster --region us-west-1
+                	 echo "Deploying application..."
+	                 helm upgrade --install java-app ./java-app --values values_dev.yaml --set app.image="634639955940.dkr.ecr.us-west-1.amazonaws.com/product_service:${env.BUILD_NUMBER}"
+		
                       """
                  }
               }
      
-         stage('Deploy application to K8s') {
-            agent { docker 'ventx/helm-awscli-kubectl-terraform:tf-v0.12.24' }
-            steps {
-              sh """
-                 export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
-                 export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-                 export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
-		 chown -R jenkins /var/lib/jenkins/workspace
-                 rm -rf .kube
-                 mkdir .kube
-                 touch .kube/config
-                 chmod 775 .kube/config
-                 ls -la .kube
-                 aws --version
-                 helm version
-                 aws eks update-kubeconfig --name devopsthehardway-cluster --region us-west-1 
-                 echo "Deploying application..."
-                 helm upgrade --install java-app ./java-app --values values_dev.yaml --set app.image="634639955940.dkr.ecr.us-west-1.amazonaws.com/product_service:${env.BUILD_NUMBER}"
-                 sleep 6s
-                 kubectl get deployments
-                 kubectl get pods 
-                 helm list
-                 echo "Application successfully deployed
-
-                 """
-                  }
-                }
-              }
+            }
 
     post {
       failure {
