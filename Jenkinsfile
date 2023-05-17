@@ -47,9 +47,6 @@ pipeline {
             steps {
                 echo 'Bulding docker image...'
                 sh "docker build -t product_service:${env.BUILD_NUMBER} ."
-                echo "Testing docker app..."
-                sh "docker ps"
-                sh "docker run -d  -p 80:8080 --name java-app product_service:${env.BUILD_NUMBER}"
             }
         }        
         
