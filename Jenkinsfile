@@ -69,9 +69,9 @@ pipeline {
                  export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
                  export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
                  export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
-                 mkdir -p /root/.kube
-                 touch /root/.kube/config
-                 ls -la /root/.kube
+                 mkdir .kube
+                 touch .kube/config
+                 ls -la .kube
                  aws --version
                  helm version
                  aws eks update-kubeconfig --name devopsthehardway-cluster --region us-west-1 
