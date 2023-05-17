@@ -83,7 +83,7 @@ pipeline {
         	         helm version
                 	 aws eks update-kubeconfig --name devopsthehardway-cluster --region us-west-1
                 	 echo "Deploying application..."
-	                 helm upgrade --install java-app ./java-app  --set app.image="${ECR_REGISTRY_ID}/{IMAGE_NAME}:${env.BUILD_NUMBER}"
+	                 helm upgrade --install java-app ./java-app  --set app.image="${ECR_REGISTRY_ID}/${IMAGE_NAME}:${env.BUILD_NUMBER}"
  			 sleep 6s
                          helm ls
                          
