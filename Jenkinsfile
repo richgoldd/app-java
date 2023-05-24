@@ -56,7 +56,9 @@ pipeline {
         
         stage('Scanning docker image') {
           steps {
-             sh "trivy image product_service:${env.BUILD_NUMBER}"
+             echo "Scannging git repository"
+             sh "trivy repo "https://github.com/richgoldd/app-java"
+             sh "trivy image --severity HIGH,CRITICAL product_service:${env.BUILD_NUMBER}"
           }
         }
         stage('Push Docker Image to ECR') {
