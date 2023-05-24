@@ -11,7 +11,7 @@ pipeline {
       maven 'M3'
       jdk 'JDK11'
     }
-    
+
     stages {      
         stage('Git Checkout') {
             steps { 
@@ -102,6 +102,11 @@ pipeline {
         mail to: 'richgoldd2@gmail.com',
             subject: 'Failed pipeline: ${currentBuild.fullDisplayName}',
             body: 'Pipeline failed for dev ${env.BUILD_URL}'
+         }
+      success {
+        mail to: 'richgoldd2@gmail.com',
+            subject: 'Build Sucess: ${currentBuild.fullDisplayName}',
+            body: 'Pipeline was successful for dev ${env.BUILD_URL}'
          }
        }
      }
