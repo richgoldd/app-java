@@ -55,7 +55,6 @@ pipeline {
         }        
         
         stage('Scanning docker image') {
-          agent { docker 'ghcr.io/aquasecurity/trivy:latest'}
           steps {
              sh "trivy image product_service:${env.BUILD_NUMBER}"
           }
@@ -97,7 +96,8 @@ pipeline {
  			                   sleep 6s
                          helm ls
                          echo 'Removing docker images to free space in dev environment'
-                         docker rmi ${ECR_REGISTRY_ID}/${IMAGE_NAME}:${env.BUILD_NUMBER} product_service:${env.BUILD_NUMBER}
+                         docker rmi ${ECR_REGISTRY_ID}/${IMAGE_NAME}:${env.BUILD_NUMBER} 
+                         docker rmi product_service:${env.BUILD_NUMBER}
                        
                         """
                  }
