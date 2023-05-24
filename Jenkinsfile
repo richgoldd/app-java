@@ -102,10 +102,10 @@ pipeline {
 
     post {
       failure {
-       echo "Pipeline for ${currentBuild.fullDisplayName} failed"
+       echo "Messages to Developers: Pipeline for ${currentBuild.fullDisplayName} failed"
          }
       success {
-       echo "Messages to Developers: Pipeline for ${currentBuild.fullDisplayName} failed"
+       echo "Messages to Developers: Pipeline for ${currentBuild.fullDisplayName} was a success"
          }
       
        }
