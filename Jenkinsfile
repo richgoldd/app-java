@@ -57,7 +57,7 @@ pipeline {
         stage('Scanning docker image') {
           agent { docker 'bitnami/trivy:0.41.0'}
           steps {
-             sh "docker run ghcr.io/aquasecurity/trivy:latest image product_service:${env.BUILD_NUMBER}"
+             sh "trivy image product_service:${env.BUILD_NUMBER}"
           }
         }
         stage('Push Docker Image to ECR') {
