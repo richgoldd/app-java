@@ -50,6 +50,8 @@ pipeline {
             steps {
                 echo 'Bulding docker image...'
                 sh "docker build -t product_service:${env.BUILD_NUMBER} ."
+                sh "docker ps -a"
+                sh "docker run -d -p 80:8080 --name product_service product_service:${env.BUILD_NUMBER} &"
             }
         }        
         
