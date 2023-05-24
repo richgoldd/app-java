@@ -2,13 +2,16 @@ pipeline {
 
     agent any
     environment {
-        AWS_ACCESS_KEY_ID     = credentials('aws_access_key_id')
-        AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')
         AWS_DEFAULT_REGION = 'us-west-1'
         ECR_REGISTRY_ID = '634639955940.dkr.ecr.us-west-1.amazonaws.com'
         IMAGE_NAME = 'product_service'
        }
 
+    tools {
+      maven 'M3'
+      jdk 'JDK11'
+    }
+    
     stages {      
         stage('Git Checkout') {
             steps { 
@@ -18,7 +21,7 @@ pipeline {
                }      
               
         stage('Build Stage') {
-           agent { docker 'maven:3.5-alpine' }
+        //   agent { docker 'maven:3.5-alpine' }
            steps { 
                    echo 'Building stage for the app...'
                    sh 'mvn compile'
@@ -26,7 +29,7 @@ pipeline {
         }
 
         stage('Test App') {
-           agent { docker 'maven:3.5-alpine' }
+         //  agent { docker 'maven:3.5-alpine' }
            steps {
                    echo 'Testing stage for the app...'
                    sh 'mvn test'
@@ -36,7 +39,7 @@ pipeline {
         }
 
         stage('Packaging Stage') {
-           agent { docker 'maven:3.5-alpine' }
+          // agent { docker 'maven:3.5-alpine' }
            steps {
                    echo 'Packaging stage for the app..'
                    sh 'mvn package'
