@@ -105,7 +105,7 @@ pipeline {
        echo "Pipeline for ${currentBuild.fullDisplayName} failed"
          }
       success {
-       echo "Pipeline for ${currentBuild.fullDisplayName} failed"
+       echo "Messages to Developers: Pipeline for ${currentBuild.fullDisplayName} failed"
          }
       
        }
