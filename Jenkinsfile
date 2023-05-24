@@ -57,8 +57,7 @@ pipeline {
         stage('Scanning docker image for vulnerabilities') {
           steps {
              echo 'Scanning docker image'
-         //    sh "trivy image --exit-code 1 --severity HIGH,CRITICAL product_service:${env.BUILD_NUMBER}"
-               sh "trivy image --severity HIGH,CRITICAL product_service:${env.BUILD_NUMBER}"
+             sh "trivy image --exit-code 1 --severity HIGH,CRITICAL product_service:${env.BUILD_NUMBER}"
           }
         }
 
