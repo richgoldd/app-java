@@ -50,6 +50,7 @@ pipeline {
             steps {
                 echo 'Bulding docker image...'
                 sh "docker build -t product_service:${env.BUILD_NUMBER} ."
+
             }
         }        
         
@@ -62,6 +63,9 @@ pipeline {
                        aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY_ID}
                        docker tag ${IMAGE_NAME}:${env.BUILD_NUMBER} ${ECR_REGISTRY_ID}/${IMAGE_NAME}:${env.BUILD_NUMBER}
                        docker push ${ECR_REGISTRY_ID}/${IMAGE_NAME}:${env.BUILD_NUMBER}
+                       echo 'Removing docker images to free space in dev environment'
+                       docker rmi ${ECR_REGISTRY_ID}/${IMAGE_NAME}:${env.BUILD_NUMBER} product_service:${env.BUILD_NUMBER}
+                       
 
                       """
                      }
