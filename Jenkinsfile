@@ -54,7 +54,7 @@ pipeline {
             }
         }        
         
-        stage('Scanning docker image') {
+        stage('Scanning docker image for vulnerabilities') {
           steps {
              echo 'Scanning docker image'
              sh "trivy image --severity HIGH,CRITICAL product_service:${env.BUILD_NUMBER}"
