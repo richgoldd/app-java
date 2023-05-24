@@ -63,10 +63,7 @@ pipeline {
                        aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY_ID}
                        docker tag ${IMAGE_NAME}:${env.BUILD_NUMBER} ${ECR_REGISTRY_ID}/${IMAGE_NAME}:${env.BUILD_NUMBER}
                        docker push ${ECR_REGISTRY_ID}/${IMAGE_NAME}:${env.BUILD_NUMBER}
-                       echo 'Removing docker images to free space in dev environment'
-                       docker rmi ${ECR_REGISTRY_ID}/${IMAGE_NAME}:${env.BUILD_NUMBER} product_service:${env.BUILD_NUMBER}
-                       
-
+                  
                       """
                      }
                     }
@@ -82,19 +79,21 @@ pipeline {
                          docker tag ${IMAGE_NAME}:${env.BUILD_NUMBER} ${ECR_REGISTRY_ID}/${IMAGE_NAME}:${env.BUILD_NUMBER}
                          docker push ${ECR_REGISTRY_ID}/${IMAGE_NAME}:${env.BUILD_NUMBER}
                          rm -rf .kube
-                	 mkdir .kube
-	                 touch .kube/config
-        	         chmod 775 .kube/config
-                	 ls -la .kube
-	                 aws --version
-        	         helm version
-                	 aws eks update-kubeconfig --name devopsthehardway-cluster --region us-west-1
-                	 echo "Deploying application..."
-	                 helm upgrade --install java-app ./java-app  --set app.image="${ECR_REGISTRY_ID}/${IMAGE_NAME}:${env.BUILD_NUMBER}"
- 			 sleep 6s
+                	       mkdir .kube
+	                       touch .kube/config
+        	               chmod 775 .kube/config
+                	       ls -la .kube
+	                       aws --version
+        	               helm version
+                	       aws eks update-kubeconfig --name devopsthehardway-cluster --region us-west-1
+                	       echo "Deploying application..."
+	                       helm upgrade --install java-app ./java-app  --set app.image="${ECR_REGISTRY_ID}/${IMAGE_NAME}:${env.BUILD_NUMBER}"
+ 			                   sleep 6s
                          helm ls
-
-                      """
+                         echo 'Removing docker images to free space in dev environment'
+                         docker rmi ${ECR_REGISTRY_ID}/${IMAGE_NAME}:${env.BUILD_NUMBER} product_service:${env.BUILD_NUMBER}
+                       
+                        """
                  }
               }
      
