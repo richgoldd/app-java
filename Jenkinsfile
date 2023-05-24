@@ -56,12 +56,11 @@ pipeline {
         
         stage('Scanning docker image') {
           steps {
-             echo "Scannging git repository with ${GITHUB_SCAN}"
-           //  sh "trivy repo 'https://github.com/richgoldd/app-java'"
              echo 'Scanning docker image'
              sh "trivy image --severity HIGH,CRITICAL product_service:${env.BUILD_NUMBER}"
           }
         }
+
         stage('Push Docker Image to ECR') {
                 steps {
                    withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS_CREDENTIALS_ID',
