@@ -104,6 +104,9 @@ pipeline {
       failure {
        echo "Pipeline for ${currentBuild.fullDisplayName} failed"
          }
+      success {
+       echo "Pipeline for ${currentBuild.fullDisplayName} failed"
+         }
       
        }
      }
