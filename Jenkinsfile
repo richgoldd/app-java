@@ -55,7 +55,7 @@ pipeline {
         }        
         
         stage('Scanning docker image') {
-          agent { docker 'bitnami/trivy:0.41.0'}
+          agent { docker 'ghcr.io/aquasecurity/trivy:latest'}
           steps {
              sh "trivy image product_service:${env.BUILD_NUMBER}"
           }
