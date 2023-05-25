@@ -12,7 +12,7 @@ pipeline {
         description: 'Enter namespace')
     }
 
-     {
+    tools {
       maven 'M3'
       jdk 'JDK11'
     }
