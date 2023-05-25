@@ -1,16 +1,16 @@
 pipeline {
 
     agent {label 'slave01'}
+
+    parameters {
+         choice(name: "NAMESPACE", choices: ["dev", "qa", "uat"], description: "Choose type of namespace")
+    }
+
     environment {
         AWS_DEFAULT_REGION = 'us-west-1'
         ECR_REGISTRY_ID = '634639955940.dkr.ecr.us-west-1.amazonaws.com'
         IMAGE_NAME = 'product_service'
        }
-    parameters {
-      choice(name: 'NAMESPACE',
-        choices: 'dev\nqa\nuat\n',
-        description: 'Enter namespace')
-    }
 
     tools {
       maven 'M3'
