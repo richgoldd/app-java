@@ -6,8 +6,13 @@ pipeline {
         ECR_REGISTRY_ID = '634639955940.dkr.ecr.us-west-1.amazonaws.com'
         IMAGE_NAME = 'product_service'
        }
-
-    tools {
+    parameters {
+      choice(name: 'NAMESPACE',
+        choices: 'dev\nqa\nuat\n',
+        description: 'Enter namespace')
+    }
+    
+     {
       maven 'M3'
       jdk 'JDK11'
     }
@@ -90,8 +95,9 @@ pipeline {
 	                       aws --version
         	               helm version
                 	       aws eks update-kubeconfig --name devopsthehardway-cluster --region us-west-1
-                	       echo "Deploying application..."
-	                       helm upgrade --install java-app ./java-app  --set app.image="${ECR_REGISTRY_ID}/${IMAGE_NAME}:${env.BUILD_NUMBER}"
+                	       echo "Changing to dev cluster environment"
+                         kubectl config current-context
+	                       helm upgrade --install java-app ./java-app  --set app.image="${ECR_REGISTRY_ID}/${IMAGE_NAME}:${env.BUILD_NUMBER}" --set app.namespace="${params.NAMESPACE}"
  			                   sleep 6s
                          helm ls
                          echo 'Removing docker images to free space in dev environment'
