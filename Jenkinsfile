@@ -100,7 +100,7 @@ pipeline {
                          echo "Deploying ${IMAGE_NAME} to ${params.NAMESPACE} environment"
 	                       helm upgrade --install java-app ./java-app  --set app.image="${ECR_REGISTRY_ID}/${IMAGE_NAME}:${env.BUILD_NUMBER}" --namespace="${params.NAMESPACE}"
  			                   sleep 6s
-                         helm ls
+                         helm ls -n "${params.NAMESPACE}"
                          echo 'Removing docker images to free space in dev environment'
                          docker rmi ${ECR_REGISTRY_ID}/${IMAGE_NAME}:${env.BUILD_NUMBER} 
                          docker rmi product_service:${env.BUILD_NUMBER}
