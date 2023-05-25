@@ -95,8 +95,9 @@ pipeline {
 	                       aws --version
         	               helm version
                 	       aws eks update-kubeconfig --name devopsthehardway-cluster --region us-west-1
-                	       echo "Changing to dev cluster environment"
+                	       echo "Validating the cluster"
                          kubectl config current-context
+                         echo "Deploying ${IMAGE_NAME} to ${params.NAMESPACE} environment"
 	                       helm upgrade --install java-app ./java-app  --set app.image="${ECR_REGISTRY_ID}/${IMAGE_NAME}:${env.BUILD_NUMBER}" --set app.namespace="${params.NAMESPACE}"
  			                   sleep 6s
                          helm ls
