@@ -10,7 +10,9 @@ pipeline {
         AWS_DEFAULT_REGION = 'us-west-1'
         ECR_REGISTRY_ID = '634639955940.dkr.ecr.us-west-1.amazonaws.com'
         IMAGE_NAME = 'product_service'
-       }
+        REPO = "https://github.com/richgoldd/app-java"
+        GITHUB_TOKEN = credentials('GITHUB_TOKEN_TRIVY')
+               }
 
     tools {
       maven 'M3'
@@ -24,7 +26,15 @@ pipeline {
                     checkout scm
                  }
                }      
-              
+        stage('Scanning GitHub App Repo for vulnerabilities') {
+          steps {
+             sh "export GITHUB_TOKEN=${GITHUB_TOKEN}"
+             echo "Scanning GitHub Repo ${REPO}for vulnerabilities"
+              // sh "trivy repo --severity HIGH,CRITICAL $REPO"
+             sh "trivy repo --exit-code 1 --severity HIGH,CRITICAL $REPO"
+          }
+        }
+
         stage('Build Stage') {
         //   agent { docker 'maven:3.5-alpine' }
            steps { 
