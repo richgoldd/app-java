@@ -29,7 +29,7 @@ pipeline {
         stage('Scanning GitHub App Repo for vulnerabilities') {
           steps {
              sh "export GITHUB_TOKEN=${GITHUB_TOKEN}"
-             echo "Scanning GitHub Repo ${REPO}for vulnerabilities"
+             echo "Scanning GitHub Repo ${REPO} for vulnerabilities"
               // sh "trivy repo --severity HIGH,CRITICAL $REPO"
              sh "trivy repo --exit-code 1 --severity HIGH,CRITICAL $REPO"
           }
