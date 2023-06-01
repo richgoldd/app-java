@@ -104,7 +104,7 @@ pipeline {
                 	       ls -la .kube
 	                       aws --version
         	               helm version
-                	       aws eks update-kubeconfig --name devopsthehardway-cluster --region us-west-1
+                	       aws eks update-kubeconfig --name richgold-demo-cluster --region us-west-1
                 	       echo "Validating the cluster"
                          kubectl config current-context
                          echo "Deploying ${IMAGE_NAME} to ${params.NAMESPACE} environment"
