@@ -108,7 +108,7 @@ pipeline {
                 	       echo "Validating the cluster"
                          kubectl config current-context
                          echo "Deploying ${IMAGE_NAME} to ${params.NAMESPACE} environment"
-	                       helm upgrade --install java-app ./java-app  --set app.image="${ECR_REGISTRY_ID}/${IMAGE_NAME}:${env.BUILD_NUMBER}" --namespace="${params.NAMESPACE}"
+	                       helm upgrade --install java-app-release ./java-app  --set app.image="${ECR_REGISTRY_ID}/${IMAGE_NAME}:${env.BUILD_NUMBER}" --namespace="${params.NAMESPACE}"
  			                   sleep 6s
                          helm ls -n "${params.NAMESPACE}"
                          echo 'Removing docker images to free space in dev environment'
