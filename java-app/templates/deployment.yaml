@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: myapp
+  name: data-app
   #namespace: "{{ .Values.app.namespace }}"
 spec:
   selector:
     matchLabels:
-      app: myapp
+      app: data-app
   replicas: 2
   template:
     metadata:
       labels:
-        app: myapp
+        app: data-app
     spec:
       containers:
-      - name: myapp
+      - name: data-app
         image: "{{ .Values.app.image }}"
         ports:
         - containerPort: 8080
