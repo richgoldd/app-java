@@ -1,1 +1,17 @@
+name: ci job
+on: 
+  push:
+    branches: 
+      - master
+  workflow_dispatch: 
+
+jobs:
+   build:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout from SCM
+          uses: actions/checkout@v2
+
+        - name: Check if helm is installed
+          run: helm version
 
