@@ -1,9 +1,14 @@
 name: ci job
 on: 
-  push:
-    branches: 
-      - master
+  # push:
+  #   branches: 
+  #     - master
   workflow_dispatch: 
+    inputs:
+      message:
+         required: true
+         description: "Enter any message"
+         
 
 jobs:
    build:
@@ -14,4 +19,7 @@ jobs:
 
         - name: Check if helm is installed
           run: helm version
+
+        - name: Message display
+          run: echo "${{ github.event.inputs.message }}"
 
