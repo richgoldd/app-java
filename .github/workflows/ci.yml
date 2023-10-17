@@ -8,6 +8,8 @@ on:
       message:
          required: true
          description: "Enter any message"
+         type: string
+         
          
 
 jobs:
