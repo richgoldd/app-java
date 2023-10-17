@@ -25,3 +25,10 @@ jobs:
         - name: Message display
           run: echo "${{ github.event.inputs.message }}"
 
+   test:
+     needs: [build]
+     runs-on: ubuntu-latest
+     steps:
+      - name: Test results
+        run: echo "Testing results..."
+
